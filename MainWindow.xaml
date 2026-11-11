@@ -9,13 +9,17 @@
         Title="Quiz Configurator" Height="490" Width="780"
         PreviewKeyDown="Window_PreviewKeyDown">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="17*"/>
+            <ColumnDefinition Width="178*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <views:MenuView Grid.Row="0"/>
-        <views:ConfigurationView x:Name="ConfigurationViewControl" Grid.Row="1" />
-        <views:PlayerView x:Name="PlayerViewControl" Grid.Row="1" Visibility="Collapsed" />
+        <views:MenuView Grid.Row="0" Grid.ColumnSpan="2" Margin="0,0,0,18"/>
+        <views:ConfigurationView x:Name="ConfigurationViewControl" Grid.ColumnSpan="2" Margin="0,18,0,0" Grid.RowSpan="2" />
+        <views:PlayerView x:Name="PlayerViewControl" Visibility="Collapsed" Grid.ColumnSpan="2" Margin="0,18,0,0" Grid.RowSpan="2" />
     </Grid>
 </Window>
