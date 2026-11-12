@@ -20,6 +20,12 @@ internal class MainWindowViewModel : ViewModelBase
     public ICommand SelectPackCommand { get; }
     public ICommand DeletePackCommand { get; }
     public ICommand ImportQuestionsCommand { get; }
+    public event EventHandler? PackOptionsRequested;
+
+    public ICommand PackOptionsCommand { get; }
+
+    public ICommand AddQuestionCommand => ConfigurationViewModel.AddQuestionCommand;
+    public ICommand RemoveQuestionCommand => ConfigurationViewModel.RemoveQuestionCommand;
 
     public QuestionPackViewModel ActivePack
     {
@@ -50,6 +56,8 @@ internal class MainWindowViewModel : ViewModelBase
 
         ImportQuestionsCommand = new RelayCommand(_ =>
             ImportQuestionsRequested?.Invoke(this, EventArgs.Empty));
+
+        PackOptionsCommand = new RelayCommand(_ => PackOptionsRequested?.Invoke(this, EventArgs.Empty),_ => ActivePack is not null);
 
         var questionPack = new QuestionPack("Default Question Pack", Difficulty.Easy);
         questionPack.Questions.Add(new Question(

@@ -70,7 +70,7 @@
                 Value="{Binding TimeLimitInSeconds, Mode=TwoWay}"
                 Margin="0,4,0,0" />
 
-        <StackPanel Grid.Row="7"
+        <StackPanel Grid.Row="6"
                     Orientation="Horizontal"
                     HorizontalAlignment="Center"
                     Margin="0,16,0,0">

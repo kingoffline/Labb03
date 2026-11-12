@@ -17,6 +17,7 @@ namespace L046_Labb3_Code_along
             _viewModel.CreateNewPackRequested += OnCreateNewPackRequested;
             _viewModel.DeletePackRequested += OnDeletePackRequested;
             _viewModel.ImportQuestionsRequested += OnImportQuestionsRequested;
+            _viewModel.PackOptionsRequested += OnPackOptionsRequested;
         }
 
         public void ShowPlayerView()
@@ -51,23 +52,14 @@ namespace L046_Labb3_Code_along
         {
             var key = e.Key == Key.System ? e.SystemKey : e.Key;
 
-            if (Keyboard.Modifiers == ModifierKeys.Control && key == Key.P)
-            {
-                ShowPlayerView();
-                e.Handled = true;
-            }
-            else if (Keyboard.Modifiers == ModifierKeys.Control && key == Key.E)
-            {
-                ShowConfigurationView();
-                e.Handled = true;
-            }
-            else if (Keyboard.Modifiers == ModifierKeys.Alt && key == Key.Enter)
-            {
-                ToggleFullscreen();
-                e.Handled = true;
-            } else if (Keyboard.Modifiers == ModifierKeys.Control && key == Key.N)
+            if (Keyboard.Modifiers == ModifierKeys.Control && key == Key.N)
             {
                 _viewModel.NewPackCommand.Execute(null);
+                e.Handled = true;
+            }
+            else if (Keyboard.Modifiers == ModifierKeys.Control && key == Key.O)
+            {
+                _viewModel.PackOptionsCommand.Execute(null);
                 e.Handled = true;
             }
             else if (Keyboard.Modifiers == ModifierKeys.Control && key == Key.I)
@@ -78,6 +70,32 @@ namespace L046_Labb3_Code_along
             else if (Keyboard.Modifiers == ModifierKeys.Control && key == Key.P)
             {
                 ShowPlayerView();
+                e.Handled = true;
+            }
+            else if (Keyboard.Modifiers == ModifierKeys.Control && key == Key.E)
+            {
+                ShowConfigurationView();
+                e.Handled = true;
+            }
+            else if (Keyboard.Modifiers == ModifierKeys.None && key == Key.Insert)
+            {
+                if (Keyboard.FocusedElement is not System.Windows.Controls.Primitives.TextBoxBase)
+                {
+                    _viewModel.AddQuestionCommand.Execute(null);
+                    e.Handled = true;
+                }
+            }
+            else if (Keyboard.Modifiers == ModifierKeys.None && key == Key.Delete)
+            {
+                if (Keyboard.FocusedElement is not System.Windows.Controls.Primitives.TextBoxBase)
+                {
+                    _viewModel.RemoveQuestionCommand.Execute(null);
+                    e.Handled = true;
+                }
+            }
+            else if (Keyboard.Modifiers == ModifierKeys.Alt && key == Key.Enter)
+            {
+                ToggleFullscreen();
                 e.Handled = true;
             }
         }
@@ -121,6 +139,23 @@ namespace L046_Labb3_Code_along
                 "Import Questions",
                 MessageBoxButton.OK,
                 MessageBoxImage.Information);
+        }
+
+        private void OnPackOptionsRequested(object? sender, EventArgs e)
+        {
+            if (_viewModel.ActivePack is null)
+                return;
+
+            var dialogViewModel = new PackOptionsDialogViewModel(_viewModel.ActivePack);
+
+            var dialog = new PackOptionsDialog
+            {
+                DataContext = dialogViewModel,
+                Owner = this
+            };
+
+            if (dialog.ShowDialog() == true)
+                dialogViewModel.ApplyTo(_viewModel.ActivePack);
         }
     }
 }
