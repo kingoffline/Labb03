@@ -12,7 +12,7 @@ namespace L046_Labb3_Code_along.Views
 
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
-            Application.Current.Shutdown();
+            Window.GetWindow(this)?.Close();
         }
 
         private void Play_Click(object sender, RoutedEventArgs e)

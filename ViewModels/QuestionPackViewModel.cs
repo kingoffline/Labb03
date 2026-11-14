@@ -55,4 +55,12 @@ internal class QuestionPackViewModel : ViewModelBase
     }
 
     public ObservableCollection<Question> Questions { get; }
+
+    public QuestionPack ToModel()
+    {
+        return new QuestionPack(Name, Difficulty, TimeLimitInSeconds)
+        {
+            Questions = Questions.ToList()
+        };
+    }
 }

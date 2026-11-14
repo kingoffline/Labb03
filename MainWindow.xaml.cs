@@ -2,6 +2,7 @@ using System.Windows;
 using System.Windows.Input;
 using L046_Labb3_Code_along.Dialogs;
 using L046_Labb3_Code_along.ViewModels;
+using System.ComponentModel;
 
 namespace L046_Labb3_Code_along
 {
@@ -9,6 +10,7 @@ namespace L046_Labb3_Code_along
     {
         private readonly MainWindowViewModel _viewModel;
         private bool _isFullscreen;
+        private bool _isClosing;
 
         public MainWindow()
         {
@@ -18,6 +20,7 @@ namespace L046_Labb3_Code_along
             _viewModel.DeletePackRequested += OnDeletePackRequested;
             _viewModel.ImportQuestionsRequested += OnImportQuestionsRequested;
             _viewModel.PackOptionsRequested += OnPackOptionsRequested;
+            _viewModel.ErrorRequested += OnErrorRequested;
         }
 
         public void ShowPlayerView()
@@ -156,6 +159,31 @@ namespace L046_Labb3_Code_along
 
             if (dialog.ShowDialog() == true)
                 dialogViewModel.ApplyTo(_viewModel.ActivePack);
+                _viewModel.RequestSave();
+        }
+
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            await _viewModel.InitializeAsync();
+        }
+
+        private async void Window_Closing(object? sender, CancelEventArgs e)
+        {
+            if (_isClosing)
+                return;
+
+            _isClosing = true;
+            e.Cancel = true;
+
+            await _viewModel.SaveAsync();
+
+            Close();
+        }
+
+        private void OnErrorRequested(string message)
+        {
+            MessageBox.Show(this, message, "Quiz Configurator",
+                MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 }

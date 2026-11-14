@@ -65,6 +65,7 @@ internal class ConfigurationViewModel : ViewModelBase
 
         ActivePack.Questions.Add(question);
         SelectedQuestion = question;
+        _mainWindowViewModel.RequestSave();
         CommandManager.InvalidateRequerySuggested();
     }
 
@@ -79,7 +80,7 @@ internal class ConfigurationViewModel : ViewModelBase
         SelectedQuestion = ActivePack.Questions.Count == 0
             ? null
             : ActivePack.Questions[Math.Min(index, ActivePack.Questions.Count - 1)];
-
+        _mainWindowViewModel.RequestSave();
         CommandManager.InvalidateRequerySuggested();
     }
 }
