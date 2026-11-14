@@ -1,14 +1,25 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Text.Json.Serialization;
 
 namespace L046_Labb3_Code_along.Models;
 
 internal class Question : INotifyPropertyChanged
 {
-    private string _query;
-    private string _correctAnswer;
+    private string _query = string.Empty;
+    private string _correctAnswer = string.Empty;
+    private string[] _incorrectAnswers = new string[3];
 
-    public Question(string query, string correctAnswer, string incorrectAnswer1, string incorrectAnswer2, string incorrectAnswer3)
+    public Question()
+    {
+    }
+
+    public Question(
+        string query,
+        string correctAnswer,
+        string incorrectAnswer1,
+        string incorrectAnswer2,
+        string incorrectAnswer3)
     {
         _query = query;
         _correctAnswer = correctAnswer;
@@ -20,10 +31,11 @@ internal class Question : INotifyPropertyChanged
         get => _query;
         set
         {
-            if (_query == value)
+            var newValue = value ?? string.Empty;
+            if (_query == newValue)
                 return;
 
-            _query = value;
+            _query = newValue;
             OnPropertyChanged();
         }
     }
@@ -33,42 +45,69 @@ internal class Question : INotifyPropertyChanged
         get => _correctAnswer;
         set
         {
-            if (_correctAnswer == value)
+            var newValue = value ?? string.Empty;
+            if (_correctAnswer == newValue)
                 return;
 
-            _correctAnswer = value;
+            _correctAnswer = newValue;
             OnPropertyChanged();
         }
     }
 
-    public string[] IncorrectAnswers { get; set; }
+    public string[] IncorrectAnswers
+    {
+        get => _incorrectAnswers;
+        set
+        {
+            _incorrectAnswers = Normalize(value);
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(IncorrectAnswer1));
+            OnPropertyChanged(nameof(IncorrectAnswer2));
+            OnPropertyChanged(nameof(IncorrectAnswer3));
+        }
+    }
 
+    [JsonIgnore]
     public string IncorrectAnswer1
     {
-        get => IncorrectAnswers[0];
+        get => _incorrectAnswers[0];
         set
         {
-            IncorrectAnswers[0] = value;
+            var newValue = value ?? string.Empty;
+            if (_incorrectAnswers[0] == newValue)
+                return;
+
+            _incorrectAnswers[0] = newValue;
             OnPropertyChanged();
         }
     }
 
+    [JsonIgnore]
     public string IncorrectAnswer2
     {
-        get => IncorrectAnswers[1];
+        get => _incorrectAnswers[1];
         set
         {
-            IncorrectAnswers[1] = value;
+            var newValue = value ?? string.Empty;
+            if (_incorrectAnswers[1] == newValue)
+                return;
+
+            _incorrectAnswers[1] = newValue;
             OnPropertyChanged();
         }
     }
 
+    [JsonIgnore]
     public string IncorrectAnswer3
     {
-        get => IncorrectAnswers[2];
+        get => _incorrectAnswers[2];
         set
         {
-            IncorrectAnswers[2] = value;
+            var newValue = value ?? string.Empty;
+            if (_incorrectAnswers[2] == newValue)
+                return;
+
+            _incorrectAnswers[2] = newValue;
             OnPropertyChanged();
         }
     }
@@ -78,5 +117,21 @@ internal class Question : INotifyPropertyChanged
     private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    // Se till att arrayen alltid har exakt tre platser. Annars kan
+    // IncorrectAnswer1/2/3 få IndexOutOfRange när JSON saknar värden.
+    private static string[] Normalize(string[]? answers)
+    {
+        var result = new string[3];
+
+        for (var i = 0; i < result.Length; i++)
+        {
+            result[i] = answers is not null && i < answers.Length
+                ? answers[i] ?? string.Empty
+                : string.Empty;
+        }
+
+        return result;
     }
 }
