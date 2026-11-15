@@ -22,7 +22,6 @@ internal class PlayerViewModel : ViewModelBase
     private string _packName = string.Empty;
     private string _currentQuestionText = string.Empty;
     private List<AnswerOption> _answerOptions = new();
-    private string _feedbackText = string.Empty;
     private int _currentIndex;
     private int _score;
     private int _timeRemaining;
@@ -103,12 +102,6 @@ internal class PlayerViewModel : ViewModelBase
 
     public bool IsPlaying => !_isFinished;
 
-    public string FeedbackText
-    {
-        get => _feedbackText;
-        private set => SetProperty(ref _feedbackText, value);
-    }
-
     public string ResultText => $"You got {_score} out of {_questions.Count} answers correct!";
 
     public ICommand SubmitAnswerCommand { get; }
@@ -147,7 +140,6 @@ internal class PlayerViewModel : ViewModelBase
 
         CurrentQuestionText = question.Query;
         HasAnswered = false;
-        FeedbackText = string.Empty;
         TimeRemaining = TimeLimit;
 
         var answers = new List<AnswerOption>
@@ -201,21 +193,11 @@ internal class PlayerViewModel : ViewModelBase
             })
             .ToList();
 
-        if (selected is null)
-        {
-            FeedbackText = $"Time is up! The correct answer was: {correctText}";
-        }
-        else if (selected.IsCorrect)
+        if (selected is not null && selected.IsCorrect)
         {
             _score++;
-            FeedbackText = "Correct!";
-        }
-        else
-        {
-            FeedbackText = $"Wrong! The correct answer was: {correctText}";
         }
 
-        // Feedbacken visas i 2 sekunder, sedan går vi vidare automatiskt.
         _advanceTimer.Start();
     }
 
