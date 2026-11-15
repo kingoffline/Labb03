@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              mc:Ignorable="d"
              DataContext="{Binding ConfigurationViewModel}"
              d:DesignHeight="450" d:DesignWidth="780">
@@ -14,8 +15,6 @@
             <Setter Property="Margin" Value="2,0,0,0" />
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="FontFamily" Value="Segoe MDL2 Assets" />
-            <Setter Property="FontSize" Value="13" />
             <Setter Property="Cursor" Value="Hand" />
             <Setter Property="Template">
                 <Setter.Value>
@@ -70,17 +69,22 @@
 
                 <StackPanel Grid.Column="1" Orientation="Horizontal">
                     <Button Style="{StaticResource IconButtonStyle}"
-                            Content="&#xE713;"
-                            Command="{Binding PackOptionsCommand}"
-                            ToolTip="Pack Options" />
+        Command="{Binding PackOptionsCommand}"
+        ToolTip="Pack Options">
+                        <fa:IconBlock Icon="Sliders" FontSize="13" />
+                    </Button>
+
                     <Button Style="{StaticResource IconButtonStyle}"
-                            Content="&#xE710;"
-                            Command="{Binding AddQuestionCommand}"
-                            ToolTip="Add question" />
+        Command="{Binding AddQuestionCommand}"
+        ToolTip="Add question">
+                        <fa:IconBlock Icon="Plus" FontSize="13" />
+                    </Button>
+
                     <Button Style="{StaticResource IconButtonStyle}"
-                            Content="&#xE738;"
-                            Command="{Binding RemoveQuestionCommand}"
-                            ToolTip="Remove question" />
+        Command="{Binding RemoveQuestionCommand}"
+        ToolTip="Remove question">
+                        <fa:IconBlock Icon="Minus" FontSize="13" />
+                    </Button>
                 </StackPanel>
             </Grid>
 

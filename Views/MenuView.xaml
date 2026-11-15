@@ -3,23 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              mc:Ignorable="d"
              d:DesignHeight="24" d:DesignWidth="780">
     <Menu>
-        <Menu.Resources>
-            <Style x:Key="MenuIconStyle" TargetType="TextBlock">
-                <Setter Property="FontFamily" Value="Segoe MDL2 Assets" />
-                <Setter Property="FontSize" Value="14" />
-                <Setter Property="VerticalAlignment" Value="Center" />
-            </Style>
-        </Menu.Resources>
-
         <MenuItem Header="_File">
             <MenuItem Header="_New Question Pack"
                       Command="{Binding NewPackCommand}"
                       InputGestureText="Ctrl+N">
                 <MenuItem.Icon>
-                    <TextBlock Style="{StaticResource MenuIconStyle}" Text="&#xE710;" />
+                    <fa:IconBlock Icon="SquarePlus" FontSize="14" />
                 </MenuItem.Icon>
             </MenuItem>
 
@@ -27,7 +20,7 @@
                       ItemsSource="{Binding Packs}"
                       DisplayMemberPath="Name">
                 <MenuItem.Icon>
-                    <TextBlock Style="{StaticResource MenuIconStyle}" Text="&#xE8B7;" />
+                    <fa:IconBlock Icon="FolderOpen" FontSize="14" />
                 </MenuItem.Icon>
                 <MenuItem.ItemContainerStyle>
                     <Style TargetType="MenuItem">
@@ -42,7 +35,7 @@
             <MenuItem Header="_Delete Question Pack"
                       Command="{Binding DeletePackCommand}">
                 <MenuItem.Icon>
-                    <TextBlock Style="{StaticResource MenuIconStyle}" Text="&#xE74D;" />
+                    <fa:IconBlock Icon="SquareMinus" FontSize="14" />
                 </MenuItem.Icon>
             </MenuItem>
 
@@ -52,7 +45,7 @@
                       Command="{Binding ImportQuestionsCommand}"
                       InputGestureText="Ctrl+I">
                 <MenuItem.Icon>
-                    <TextBlock Style="{StaticResource MenuIconStyle}" Text="&#xE896;" />
+                    <fa:IconBlock Icon="CloudArrowDown" FontSize="14" />
                 </MenuItem.Icon>
             </MenuItem>
 
@@ -62,35 +55,35 @@
                       InputGestureText="Alt+F4"
                       Click="Exit_Click">
                 <MenuItem.Icon>
-                    <TextBlock Style="{StaticResource MenuIconStyle}" Text="&#xE7E8;" />
+                    <fa:IconBlock Icon="RightFromBracket" FontSize="14" />
                 </MenuItem.Icon>
             </MenuItem>
         </MenuItem>
 
         <MenuItem Header="_Edit">
             <MenuItem Header="_Add Question"
-              Command="{Binding AddQuestionCommand}"
-              InputGestureText="Insert">
+                      Command="{Binding AddQuestionCommand}"
+                      InputGestureText="Insert">
                 <MenuItem.Icon>
-                    <TextBlock Style="{StaticResource MenuIconStyle}" Text="&#xE710;" />
+                    <fa:IconBlock Icon="Plus" FontSize="14" />
                 </MenuItem.Icon>
             </MenuItem>
 
             <MenuItem Header="_Remove Question"
-              Command="{Binding RemoveQuestionCommand}"
-              InputGestureText="Delete">
+                      Command="{Binding RemoveQuestionCommand}"
+                      InputGestureText="Delete">
                 <MenuItem.Icon>
-                    <TextBlock Style="{StaticResource MenuIconStyle}" Text="&#xE738;" />
+                    <fa:IconBlock Icon="Minus" FontSize="14" />
                 </MenuItem.Icon>
             </MenuItem>
 
             <Separator />
 
             <MenuItem Header="_Pack Options"
-              Command="{Binding PackOptionsCommand}"
-              InputGestureText="Ctrl+O">
+                      Command="{Binding PackOptionsCommand}"
+                      InputGestureText="Ctrl+O">
                 <MenuItem.Icon>
-                    <TextBlock Style="{StaticResource MenuIconStyle}" Text="&#xE9E9;" />
+                    <fa:IconBlock Icon="Sliders" FontSize="14" />
                 </MenuItem.Icon>
             </MenuItem>
         </MenuItem>
