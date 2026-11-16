@@ -14,6 +14,7 @@ internal class MainWindowViewModel : ViewModelBase
 
     public ObservableCollection<QuestionPackViewModel> Packs { get; } = new();
     public ConfigurationViewModel ConfigurationViewModel { get; }
+    public PlayerViewModel PlayerViewModel { get; }
 
     public event EventHandler? CreateNewPackRequested;
     public event EventHandler? DeletePackRequested;
@@ -46,6 +47,7 @@ internal class MainWindowViewModel : ViewModelBase
     public MainWindowViewModel()
     {
         ConfigurationViewModel = new ConfigurationViewModel(this);
+        PlayerViewModel = new PlayerViewModel();
 
         NewPackCommand = new RelayCommand(_ =>
             CreateNewPackRequested?.Invoke(this, EventArgs.Empty));

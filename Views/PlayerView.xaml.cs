@@ -1,26 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace L046_Labb3_Code_along.Views
 {
-    /// <summary>
-    /// Interaction logic for PlayerView.xaml
-    /// </summary>
     public partial class PlayerView : UserControl
     {
         public PlayerView()
         {
             InitializeComponent();
+        }
+
+        private void Restart_Click(object sender, RoutedEventArgs e)
+        {
+            if (Window.GetWindow(this) is MainWindow mainWindow)
+                mainWindow.ShowPlayerView();
         }
     }
 }
