@@ -96,6 +96,7 @@ internal class PlayerViewModel : ViewModelBase
                 _timer.Stop();
                 _advanceTimer.Stop();
                 RaisePropertyChanged(nameof(ResultText));
+                RaisePropertyChanged(nameof(IsPlaying));
             }
         }
     }
@@ -183,8 +184,6 @@ internal class PlayerViewModel : ViewModelBase
         _timer.Stop();
         HasAnswered = true;
 
-        var correctText = AnswerOptions.First(option => option.IsCorrect).Text;
-
         AnswerOptions = AnswerOptions
             .Select(option => option with
             {
@@ -194,9 +193,7 @@ internal class PlayerViewModel : ViewModelBase
             .ToList();
 
         if (selected is not null && selected.IsCorrect)
-        {
             _score++;
-        }
 
         _advanceTimer.Start();
     }

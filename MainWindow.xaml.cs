@@ -25,12 +25,16 @@ namespace L046_Labb3_Code_along
 
         public void ShowPlayerView()
         {
+            _viewModel.PlayerViewModel.StartRound(_viewModel.ActivePack);
+
             ConfigurationViewControl.Visibility = Visibility.Collapsed;
             PlayerViewControl.Visibility = Visibility.Visible;
         }
 
         public void ShowConfigurationView()
         {
+            _viewModel.PlayerViewModel.StopRound();
+
             PlayerViewControl.Visibility = Visibility.Collapsed;
             ConfigurationViewControl.Visibility = Visibility.Visible;
         }
